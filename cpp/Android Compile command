@@ -1,0 +1,15 @@
+
+
+
+gdexample.cpp  gdexample.os   gdlibrary.os  NueralNetController.cpp  NueralNetController.os  NueralNetFloat.h
+gdexample.h    gdlibrary.cpp  init.o        NueralNetController.h    NueralNetFloat.cpp      NueralNetFloat.os
+
+
+
+$android/aarch64-linux-android29-clang++  -fPIC -o src/gdlibrary.o -c src/gdlibrary.cpp -g -O3 -std=c++14 -Igodot-cpp/include -Igodot-cpp/include/core -Igodot-cpp/include/gen -Igodot-cpp/godot_headers
+$android/aarch64-linux-android29-clang++  -fPIC -o src/gdexample.o -c src/gdexample.cpp -g -O3 -std=c++14 -Igodot-cpp/include -Igodot-cpp/include/core -Igodot-cpp/include/gen -Igodot-cpp/godot_headers
+$android/aarch64-linux-android29-clang++  -fPIC -o src/NueralNetController.o -c src/NueralNetController.cpp -g -O3 -std=c++14 -Igodot-cpp/include -Igodot-cpp/include/core -Igodot-cpp/include/gen -Igodot-cpp/godot_headers
+$android/aarch64-linux-android29-clang++  -fPIC -o src/NueralNetFloat.o -c src/NueralNetFloat.cpp -g -O3 -std=c++14 -Igodot-cpp/include -Igodot-cpp/include/core -Igodot-cpp/include/gen -Igodot-cpp/godot_headers
+
+
+$android/aarch64-linux-android29-clang++  -o bin/libtest.so -shared src/gdlibrary.o src/gdexample.o src/NueralNetController.o src/NueralNetFloat.o -Lgodot-cpp/bin -l :libgodot-cpp.android.debug.arm64v8.a

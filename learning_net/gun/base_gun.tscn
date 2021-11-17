@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/spaceBuilding_020.png" type="Texture" id=1]
+[ext_resource path="res://assets/spaceBuilding_017.png" type="Texture" id=2]
+[ext_resource path="res://assets/spaceEffects_010.png" type="Texture" id=3]
+[ext_resource path="res://learning_net/gun/base_gun.gd" type="Script" id=4]
+[ext_resource path="res://learning_net/bullet/Bullet.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/enemy_laser.wav" type="AudioStream" id=6]
+
+[node name="base_gun" type="Sprite"]
+texture = ExtResource( 2 )
+script = ExtResource( 4 )
+Bullet = ExtResource( 5 )
+
+[node name="gun" type="Sprite" parent="."]
+position = Vector2( -0.507538, -0.261536 )
+texture = ExtResource( 1 )
+offset = Vector2( 18.5868, -1.90735e-06 )
+
+[node name="Position2D" type="Position2D" parent="gun"]
+position = Vector2( 56.0665, 0 )
+
+[node name="aim" type="Sprite" parent="."]
+modulate = Color( 1, 0, 0, 1 )
+self_modulate = Color( 1, 0, 0, 1 )
+position = Vector2( -0.62558, 0.0464859 )
+texture = ExtResource( 3 )
+offset = Vector2( 111.641, 0 )
+
+[node name="LaserSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+
+[node name="Tween" type="Tween" parent="."]

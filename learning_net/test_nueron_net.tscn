@@ -1,0 +1,141 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://learning_net/gun/test_gun.tscn" type="PackedScene" id=1]
+[ext_resource path="res://learning_net/test_nueron_net.gd" type="Script" id=2]
+[ext_resource path="res://learning_net/target/target.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "New Anim"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("../CanvasLayer/info:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("../CanvasLayer/info:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="test_gun" parent="." instance=ExtResource( 1 )]
+position = Vector2( 519.132, 538.954 )
+
+[node name="target" parent="." instance=ExtResource( 3 )]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Dialog" type="MarginContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer"]
+margin_right = 235.0
+margin_bottom = 294.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer2"]
+margin_right = 235.0
+margin_bottom = 49.0
+size_flags_vertical = 0
+text = "asdasdasd
+"
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+margin_bottom = 29.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+margin_right = 1024.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="save" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+margin_left = 159.0
+margin_right = 227.0
+margin_bottom = 29.0
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 3.52
+text = "save"
+
+[node name="load_weights" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+margin_left = 391.0
+margin_right = 568.0
+margin_bottom = 29.0
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 2.51
+text = "load_weights"
+
+[node name="traning" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+margin_left = 672.0
+margin_right = 773.0
+margin_bottom = 29.0
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 2.51
+text = "traning"
+
+[node name="menu" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+margin_left = 953.0
+margin_right = 1024.0
+margin_bottom = 29.0
+size_flags_horizontal = 4
+text = "menu"
+
+[node name="info" type="MarginContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/info"]
+margin_top = 288.0
+margin_right = 1024.0
+margin_bottom = 311.0
+text = "asdasdas"
+align = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.113
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../test_gun")
+"anims/New Anim" = SubResource( 1 )
+anims/RESET = SubResource( 2 )
+
+[connection signal="shoot" from="test_gun" to="." method="_on_test_gun_shoot"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/HBoxContainer/save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/HBoxContainer/load_weights" to="." method="_on_load_weights_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/HBoxContainer/traning" to="." method="_on_traning_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/HBoxContainer/menu" to="." method="_on_exit_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
