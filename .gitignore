@@ -1,0 +1,55 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.import
+*.stex
+*.md5
+.idea
+.mono
+.vscode
+*.user
+*.sln
+*.csproj
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+cpp/godot-cpp/**
+.import/**
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.gitmodules
+build_libs.bat
+LICENSE
+README.md
+SConstruct
+.github/workflows/build.yml
+.github/workflows/clang-format.yml

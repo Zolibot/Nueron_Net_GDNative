@@ -12,22 +12,22 @@ var start_target_speed:int
 var gun_rotation:float
 var data:Array
 
-var count:int 
+var count:int
 
 func start(pos, dir):
 	start_pos = target.get_position()
 	start_target_speed = target.get_speed()
 	count = target.get_count()
-	
+
 	gun_rotation = dir
 	data = [ start_pos.x, start_pos.y,
 			start_target_speed,
-			target.velocity.angle(), 
+			target.velocity.angle(),
 			gun_rotation ]
 	position = pos
 	velocity = Vector2(speed,0).rotated(dir)
 	rotation = dir
-	
+
 func _process(delta):
 	position += velocity * delta
 

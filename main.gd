@@ -27,36 +27,36 @@ func _on_Button_pressed() -> void:
 	for x in brain.saveNueralNetControllerState():
 		print(t," ",typeof(x))
 		t+=1
-	
+
 	var file:File = File.new()
 	file.open("user://weight.wi",File.WRITE)
 	if file.is_open():
 		for x in d:
 			file.store_line(x)
-			
+
 	file.close()
-	
+
 	$FileDialog.set_mode(FileDialog.MODE_OPEN_FILE)
 	$FileDialog.visible = true
 	$FileDialog.set_filters(PoolStringArray(["*.wi ; Weight NueronNet"]))
 	$FileDialog.invalidate()
-	
-		
+
+
 
 func _on_FileDialog_confirmed() -> void:
 	var n_weights:File = File.new()
 	n_weights.open($FileDialog.get_current_path(),File.READ)
-	
+
 	var ss:String = n_weights.get_as_text()
 	n_weights.close()
 	var ddd = ss.split("\n")
 	print(ddd)
-	
+
 	var pool:PoolStringArray = PoolStringArray()
-	
+
 	for x in ddd:
 		pool.append(x)
-		
+
 	for x in pool:
 		print(x," ",typeof(x))
 

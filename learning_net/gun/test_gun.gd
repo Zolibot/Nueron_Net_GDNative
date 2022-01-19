@@ -4,13 +4,13 @@ extends "res://learning_net/gun/base_gun.gd"
 onready var brain = preload('res://lib_godot/NueronScript.gdns').new()
 
 func _ready() -> void:
-	# input layer target (posX,posY,targetSpeed,targetCourse) 
+	# input layer target (posX,posY,targetSpeed,targetCourse)
 	# all normalize from 0 to 1
 	brain.addLayer(4)
 	#hidden layers
 	brain.addLayer(5)
 	brain.addLayer(5)
-	# output rotation on tagert 
+	# output rotation on tagert
 	brain.addLayer(1)
 	brain.startNueralNetController()
 
@@ -25,7 +25,7 @@ func input_layer(data:Array)->void:
 	shoot()
 
 
-	
+
 func shoot() -> void:
 	var rot = brain.getLayer(3)[0][0]
 	$gun.rotation = range_lerp(rot,0,1,-3, 3)

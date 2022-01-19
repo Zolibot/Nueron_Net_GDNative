@@ -12,7 +12,7 @@ var learning_data:Array
 var count = 0
 var flag:bool = false
 
-
+var is_connected = false
 
 
 var rand
@@ -68,23 +68,26 @@ func _on_traning_pressed() -> void:
 	file_dilog.margin_left = 400
 	file_dilog.set_mode(FileDialog.MODE_OPEN_FILE)
 	file_dilog.set_access(FileDialog.ACCESS_USERDATA)
-	file_dilog.set_current_dir("user://") 
-	file_dilog.set_current_path("user://") 
+	file_dilog.set_current_dir("user://")
+	file_dilog.set_current_path("user://")
 	file_dilog.visible = true
 	file_dilog.set_filters(PoolStringArray(["*.sava ; the training data"]))
 	file_dilog.invalidate()
-	file_dilog.connect('file_selected',self,'traning')
-	
-	
+	if not is_connected:
+		file_dilog.connect('file_selected',self,'traning')
+		is_connected = true
+
+
 func traning(path)->void:
+	print(path)
 	var file:File = File.new()
 	file.open(path,File.READ)
 	var learning_dat = file.get_var()
 	file.close()
 	info.set_text("start traning")
-	$AnimationPlayer.play('New Anim')
-	while true:	
-		rand = rand_range(0,len(learning_dat))
+#	$AnimationPlayer.play('New Anim')
+	while true:
+		rand = rand_range(0,len(learning_dat)-1)
 		var x = learning_dat[rand][0]
 		var y = learning_dat[rand][1]
 		var s = learning_dat[rand][2]
@@ -93,26 +96,27 @@ func traning(path)->void:
 		base_gun.brain.setData(list,len(list),0)
 		base_gun.brain.learns([learning_dat[rand][4]])
 		count+=1
-#		if count%10000:
-#			print(base_gun.brain.getError(), " count:", count)
+		if count%10000 == 0:
+			print(base_gun.brain.getError(), " count:", count)
 		if count == 200000:
+			count = 0
 			break
 	info.set_text("traning is over")
 	$AnimationPlayer.play('New Anim')
-	print("traning is over")	
-	
+	print("traning is over")
+
 func _on_save_pressed() -> void:
 	set_process(false)
 	print("____________________________")
 	var t=0
 	var d = base_gun.brain.saveNueralNetControllerState()
-	
+
 	var file:File = File.new()
 	file.open("user://weight.wi",File.WRITE)
 	if file.is_open():
 		for x in d:
 			file.store_line(x)
-			
+
 	file.close()
 	info.set_text("weights is save")
 	$AnimationPlayer.play('New Anim')
@@ -126,8 +130,8 @@ func _on_load_weights_pressed() -> void:
 	file_dilog.window_title = "Select nueron weights"
 	file_dilog.set_mode(FileDialog.MODE_OPEN_FILE)
 	file_dilog.set_access(FileDialog.ACCESS_USERDATA)
-	file_dilog.set_current_dir("user://") 
-	file_dilog.set_current_path("user://") 
+	file_dilog.set_current_dir("user://")
+	file_dilog.set_current_path("user://")
 	file_dilog.visible = true
 	file_dilog.set_filters(PoolStringArray(["*.wi ; Weight NueronNet"]))
 	file_dilog.invalidate()
@@ -137,17 +141,17 @@ func load_weights(path)->void:
 	print(path)
 	var n_weights:File = File.new()
 	n_weights.open(path,File.READ)
-	
+
 	var ss:String = n_weights.get_as_text()
 	n_weights.close()
 	var ddd = ss.split("\n")
 	print(ddd)
-	
+
 	var pool:PoolStringArray = PoolStringArray()
-	
+
 	for x in ddd:
 		pool.append(x)
-		
+
 	var brain1 = load('res://lib_godot/NueronScript.gdns').new()
 	brain1.loadNueralNetControllerState(pool)
 	base_gun.brain = brain1
